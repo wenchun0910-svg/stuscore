@@ -11,12 +11,12 @@
             theme: {
                 extend: {
                     colors: {
-                        'wabi-bg': '#F4F1EA', // 傳統和紙顏色
-                        'matcha': '#8A9A5B', // 抹茶綠
-                        'sakura': '#F1C0C9', // 櫻花粉
-                        'urushi': '#4A2511', // 漆器深棕
-                        'sumi': '#2C2A29', // 墨色
-                        'shoubu': '#6B4E71' // 菖蒲紫
+                        'wabi-bg': '#F4F1EA',
+                        'matcha': '#8A9A5B',
+                        'sakura': '#F1C0C9',
+                        'urushi': '#4A2511',
+                        'sumi': '#2C2A29',
+                        'shoubu': '#6B4E71'
                     },
                     fontFamily: {
                         'serif': ['"Noto Serif TC"', 'serif'],
@@ -37,20 +37,9 @@
             border: 1px solid #D1C7B7;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), inset 0 0 20px rgba(209, 199, 183, 0.2);
         }
-        table {
-            border-collapse: separate;
-            border-spacing: 0;
-        }
-        th, td {
-            border: 1px solid #E5E0D8;
-        }
-        th {
-            background-color: #8A9A5B;
-            color: white;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-        }
-        /* 自定義捲軸 */
+        table { border-collapse: separate; border-spacing: 0; }
+        th, td { border: 1px solid #E5E0D8; }
+        th { background-color: #8A9A5B; color: white; font-weight: 400; letter-spacing: 0.05em; }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #F4F1EA; }
         ::-webkit-scrollbar-thumb { background: #D1C7B7; border-radius: 4px; }
@@ -59,7 +48,6 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
 
-    <!-- 通知彈窗 -->
     <div id="toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-urushi text-white px-6 py-3 rounded shadow-lg transition-opacity duration-300 opacity-0 pointer-events-none z-50">
         訊息提示
     </div>
@@ -74,31 +62,25 @@
         
         <form id="login-form" class="space-y-6">
             <div>
-                <input type="text" id="student-id" required placeholder="學號" 
-                    class="w-full px-4 py-3 bg-transparent border-b-2 border-gray-300 focus:border-matcha focus:outline-none transition-colors text-center text-lg">
+                <input type="text" id="student-id" required placeholder="學號" class="w-full px-4 py-3 bg-transparent border-b-2 border-gray-300 focus:border-matcha focus:outline-none transition-colors text-center text-lg">
             </div>
             <div>
-                <input type="password" id="password" required placeholder="密碼" 
-                    class="w-full px-4 py-3 bg-transparent border-b-2 border-gray-300 focus:border-matcha focus:outline-none transition-colors text-center text-lg">
+                <input type="password" id="password" required placeholder="密碼" class="w-full px-4 py-3 bg-transparent border-b-2 border-gray-300 focus:border-matcha focus:outline-none transition-colors text-center text-lg">
             </div>
-            <button type="submit" class="w-full bg-urushi hover:bg-matcha text-white py-3 rounded transition-colors tracking-widest text-lg mt-4">
-                登入
-            </button>
+            <button type="submit" class="w-full bg-urushi hover:bg-matcha text-white py-3 rounded transition-colors tracking-widest text-lg mt-4">登入</button>
         </form>
     </div>
 
-    <!-- 主畫面 (成績查詢) -->
+    <!-- 主畫面 -->
     <div id="main-view" class="hidden w-full max-w-6xl space-y-6 transition-all duration-500">
-        
-        <!-- 頂部資訊與控制列 -->
         <div class="shoji-panel rounded-lg p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-4">
                 <div class="w-12 h-12 bg-matcha rounded-full flex items-center justify-center text-white text-xl">
                     <span id="user-avatar">生</span>
                 </div>
                 <div>
-                    <h2 class="text-xl font-bold text-urushi"><span id="display-name">王小明</span> 同學，您好</h2>
-                    <p class="text-sm text-gray-500">學號: <span id="display-id">112001</span></p>
+                    <h2 class="text-xl font-bold text-urushi"><span id="display-name">使用者</span> 同學，您好</h2>
+                    <p class="text-sm text-gray-500">學號: <span id="display-id">000000</span></p>
                 </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
@@ -112,15 +94,12 @@
             </div>
         </div>
 
-        <!-- 成績載入中提示 -->
         <div id="loading-state" class="hidden text-center py-12 shoji-panel rounded-lg">
             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-matcha mx-auto"></div>
             <p class="mt-4 text-gray-500 tracking-widest">成績讀取中...</p>
         </div>
 
-        <!-- 成績內容區塊 -->
         <div id="grades-content" class="hidden space-y-6">
-            
             <!-- 個人成績表 -->
             <div class="shoji-panel rounded-lg p-1 sm:p-6 overflow-x-auto">
                 <h3 class="text-lg font-bold text-urushi mb-4 pl-2 border-l-4 border-matcha">個人成績明細</h3>
@@ -143,13 +122,11 @@
                             <th class="py-2 px-1 bg-urushi">平均</th>
                         </tr>
                     </thead>
-                    <tbody id="personal-grades-body" class="bg-white">
-                        <!-- 資料動態產生 -->
-                    </tbody>
+                    <tbody id="personal-grades-body" class="bg-white"></tbody>
                 </table>
             </div>
 
-            <!-- 全年級/班級 各科定期分析表 -->
+            <!-- 分析表 -->
             <div class="shoji-panel rounded-lg p-1 sm:p-6 overflow-x-auto">
                 <h3 class="text-lg font-bold text-urushi mb-4 pl-2 border-l-4 border-shoubu">各科定期評量分析 (含組距)</h3>
                 <table class="w-full text-sm text-center min-w-[800px]">
@@ -166,9 +143,7 @@
                             <th class="py-2 px-2 bg-shoubu">60分以下</th>
                         </tr>
                     </thead>
-                    <tbody id="stats-grades-body" class="bg-white">
-                        <!-- 資料動態產生 -->
-                    </tbody>
+                    <tbody id="stats-grades-body" class="bg-white"></tbody>
                 </table>
                 <p class="text-xs text-gray-500 mt-2 text-right">* 高標定義：該科前50%學生的平均分數</p>
             </div>
@@ -192,62 +167,10 @@
     </div>
 
     <script>
-        // ==========================================
-        // 系統設定區
-        // ==========================================
-        // 為了讓你在預覽畫面就能看到效果，目前開啟「模擬模式」
-        // 當你要正式上線時，請將 USE_MOCK_DATA 改為 false，並填入你的 GAS_URL
-        const USE_MOCK_DATA = false; 
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbwUyHLIgYdt6JLtqElqDNqvl89i_REXUFg0PvmOs3R14zqCRLi3T5quIO7rABo7_gVd2g/exec"; 
-
-        // 全域狀態
+        // 【請在此替換為你的 GAS 網址，請確保結尾是 /exec】
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbwBldIPpLDf2IjeECDAQTgn0CyhPSIp7uBBzzmaxcdCqaua8vTwLQUBN3LIOqWdedr-Xw/exec"; 
         let currentUser = null;
 
-        // ==========================================
-        // 模擬資料 (供預覽使用)
-        // ==========================================
-        const mockExams = ['第一學期第一次評量', '第一學期第二次評量', '第二學期第一次評量'];
-        const mockUsers = { '112001': { name: '王小明', password: '123' }, '112002': { name: '陳小華', password: '123' } };
-        
-        // 產生隨機成績輔助函數
-        function rScore() { return Math.floor(Math.random() * 41) + 60; } // 60-100
-        
-        function getMockStats() {
-            // 模擬全班成績統計
-            const subjects = ['國語定期', '英語定期', '數學定期', '社會定期', '自然定期'];
-            let stats = {};
-            subjects.forEach(sub => {
-                let scores = Array.from({length: 30}, () => Math.floor(Math.random() * 60) + 40); // 30個學生 40-100分
-                scores.push(100); // 確保至少有一個100
-                scores.sort((a, b) => b - a);
-                
-                let sum = scores.reduce((a,b)=>a+b, 0);
-                let avg = (sum / scores.length).toFixed(1);
-                
-                // 高標 (前50%平均)
-                let topHalf = scores.slice(0, Math.ceil(scores.length / 2));
-                let highStd = (topHalf.reduce((a,b)=>a+b,0) / topHalf.length).toFixed(1);
-
-                stats[sub] = {
-                    avg: avg,
-                    high: highStd,
-                    dist: {
-                        '100': scores.filter(s => s === 100).length,
-                        '90': scores.filter(s => s >= 90 && s < 100).length,
-                        '80': scores.filter(s => s >= 80 && s < 90).length,
-                        '70': scores.filter(s => s >= 70 && s < 80).length,
-                        '60': scores.filter(s => s >= 60 && s < 70).length,
-                        'under60': scores.filter(s => s < 60).length
-                    }
-                };
-            });
-            return stats;
-        }
-
-        // ==========================================
-        // UI 互動邏輯
-        // ==========================================
-        
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
@@ -255,35 +178,28 @@
             setTimeout(() => { toast.classList.add('opacity-0'); }, 3000);
         }
 
-        // 登入處理
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const id = document.getElementById('student-id').value;
-            const pw = document.getElementById('password').value;
+            const id = document.getElementById('student-id').value.trim();
+            const pw = document.getElementById('password').value.trim();
             
             const btn = e.target.querySelector('button');
             btn.textContent = "登入中...";
             btn.disabled = true;
 
             try {
-                if (USE_MOCK_DATA) {
-                    await new Promise(r => setTimeout(r, 800)); // 模擬網路延遲
-                    if (mockUsers[id] && mockUsers[id].password === pw) {
-                        currentUser = { id: id, name: mockUsers[id].name };
-                        loginSuccess();
-                    } else {
-                        throw new Error('帳號或密碼錯誤 (測試帳號:112001, 密碼:123)');
-                    }
+                const res = await fetch(`${GAS_URL}?action=login&id=${encodeURIComponent(id)}&pw=${encodeURIComponent(pw)}`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    redirect: 'follow'
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    currentUser = { id: id, name: data.name };
+                    loginSuccess();
                 } else {
-                    // 真實 API 呼叫
-                    const res = await fetch(`${GAS_URL}?action=login&id=${id}&pw=${pw}`);
-                    const data = await res.json();
-                    if (data.success) {
-                        currentUser = { id: id, name: data.name };
-                        loginSuccess();
-                    } else {
-                        throw new Error(data.message || '登入失敗');
-                    }
+                    throw new Error(data.message || '登入失敗');
                 }
             } catch (err) {
                 showToast(err.message);
@@ -296,11 +212,9 @@
         async function loginSuccess() {
             document.getElementById('login-view').classList.add('hidden');
             document.getElementById('main-view').classList.remove('hidden');
-            
             document.getElementById('display-name').textContent = currentUser.name;
             document.getElementById('display-id').textContent = currentUser.id;
             document.getElementById('user-avatar').textContent = currentUser.name.charAt(0);
-            
             await loadExams();
         }
 
@@ -313,83 +227,57 @@
             document.getElementById('exam-select').innerHTML = '<option value="">載入中...</option>';
         }
 
-        // 載入考試下拉選單
         async function loadExams() {
             try {
-                let exams = [];
-                if (USE_MOCK_DATA) {
-                    exams = mockExams;
-                } else {
-                    const res = await fetch(`${GAS_URL}?action=getExams`);
-                    const data = await res.json();
-                    exams = data.exams;
-                }
-
-                const select = document.getElementById('exam-select');
-                select.innerHTML = '<option value="" disabled selected>請選擇評量...</option>';
-                exams.forEach(exam => {
-                    const opt = document.createElement('option');
-                    opt.value = exam;
-                    opt.textContent = exam;
-                    select.appendChild(opt);
+                const res = await fetch(`${GAS_URL}?action=getExams`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    redirect: 'follow'
                 });
-
-                select.addEventListener('change', (e) => loadGrades(e.target.value));
+                const data = await res.json();
                 
-                // 自動載入第一個考試
-                if(exams.length > 0) {
-                    select.value = exams[0];
-                    loadGrades(exams[0]);
-                }
+                if(data.success) {
+                    const select = document.getElementById('exam-select');
+                    select.innerHTML = '<option value="" disabled selected>請選擇評量...</option>';
+                    data.exams.forEach(exam => {
+                        const opt = document.createElement('option');
+                        opt.value = exam;
+                        opt.textContent = exam;
+                        select.appendChild(opt);
+                    });
 
+                    select.addEventListener('change', (e) => loadGrades(e.target.value));
+                    if(data.exams.length > 0) {
+                        select.value = data.exams[0];
+                        loadGrades(data.exams[0]);
+                    }
+                }
             } catch (err) {
                 showToast('載入評量清單失敗');
             }
         }
 
-        // 載入選擇的考試成績
         async function loadGrades(examName) {
             if (!examName) return;
-            
             document.getElementById('grades-content').classList.add('hidden');
             document.getElementById('loading-state').classList.remove('hidden');
 
             try {
-                let personalGrade, statsData;
-
-                if (USE_MOCK_DATA) {
-                    await new Promise(r => setTimeout(r, 600));
-                    personalGrade = {
-                        seatNo: '05', name: currentUser.name,
-                        chiMid: rScore(), chiDaily: rScore(),
-                        engMid: rScore(), engDaily: rScore(),
-                        mathMid: rScore(), mathDaily: rScore(),
-                        socMid: rScore(), socDaily: rScore(),
-                        sciMid: rScore(), sciDaily: rScore(),
-                    };
-                    // 計算模擬總分平均
-                    let total = personalGrade.chiMid + personalGrade.chiDaily + personalGrade.engMid + personalGrade.engDaily +
-                                personalGrade.mathMid + personalGrade.mathDaily + personalGrade.socMid + personalGrade.socDaily + 
-                                personalGrade.sciMid + personalGrade.sciDaily;
-                    personalGrade.total = total;
-                    personalGrade.avg = (total / 10).toFixed(1);
-                    statsData = getMockStats();
+                const res = await fetch(`${GAS_URL}?action=getGrades&exam=${encodeURIComponent(examName)}&id=${encodeURIComponent(currentUser.id)}`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    redirect: 'follow'
+                });
+                const data = await res.json();
+                
+                if(data.success) {
+                    renderPersonalGrades(data.personal);
+                    renderStats(data.stats);
+                    document.getElementById('loading-state').classList.add('hidden');
+                    document.getElementById('grades-content').classList.remove('hidden');
                 } else {
-                    const res = await fetch(`${GAS_URL}?action=getGrades&exam=${examName}&id=${currentUser.id}`);
-                    const data = await res.json();
-                    if(data.success) {
-                        personalGrade = data.personal;
-                        statsData = data.stats;
-                    } else {
-                        throw new Error(data.message);
-                    }
+                    throw new Error(data.message);
                 }
-
-                renderPersonalGrades(personalGrade);
-                renderStats(statsData);
-
-                document.getElementById('loading-state').classList.add('hidden');
-                document.getElementById('grades-content').classList.remove('hidden');
             } catch (err) {
                 document.getElementById('loading-state').classList.add('hidden');
                 showToast('讀取成績失敗：' + err.message);
@@ -398,7 +286,6 @@
 
         function renderPersonalGrades(data) {
             const tbody = document.getElementById('personal-grades-body');
-            // 根據資料庫格式對應欄位 (此處假定資料鍵值已對應)
             tbody.innerHTML = `
                 <tr class="hover:bg-gray-50 transition-colors">
                     <td class="py-3 px-1">${data.seatNo || '-'}</td>
@@ -445,16 +332,14 @@
             tbody.innerHTML = html;
         }
 
-        // 更改密碼功能
-        function showChangePassword() {
-            document.getElementById('password-modal').classList.remove('hidden');
-        }
+        function showChangePassword() { document.getElementById('password-modal').classList.remove('hidden'); }
         function hideChangePassword() {
             document.getElementById('password-modal').classList.add('hidden');
             document.getElementById('old-pw').value = '';
             document.getElementById('new-pw').value = '';
             document.getElementById('new-pw-confirm').value = '';
         }
+        
         async function submitChangePassword() {
             const oldPw = document.getElementById('old-pw').value;
             const newPw = document.getElementById('new-pw').value;
@@ -464,24 +349,16 @@
             if (newPw !== confirmPw) return showToast('新密碼與確認密碼不符');
 
             try {
-                if (USE_MOCK_DATA) {
-                    if (mockUsers[currentUser.id].password !== oldPw) throw new Error('原密碼錯誤');
-                    mockUsers[currentUser.id].password = newPw;
+                const res = await fetch(GAS_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'changePassword', id: currentUser.id, oldPw: oldPw, newPw: newPw })
+                });
+                const data = await res.json();
+                if(data.success) {
                     showToast('密碼修改成功');
                     hideChangePassword();
                 } else {
-                    // 真實環境：因為牽涉密碼修改，這裡用 POST 方法
-                    const res = await fetch(GAS_URL, {
-                        method: 'POST',
-                        body: JSON.stringify({ action: 'changePassword', id: currentUser.id, oldPw: oldPw, newPw: newPw })
-                    });
-                    const data = await res.json();
-                    if(data.success) {
-                        showToast('密碼修改成功');
-                        hideChangePassword();
-                    } else {
-                        throw new Error(data.message);
-                    }
+                    throw new Error(data.message);
                 }
             } catch (err) {
                 showToast(err.message);
